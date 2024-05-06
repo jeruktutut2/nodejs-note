@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import logMiddleware from "../middleware/log-middleware.js";
 
 let clients = []
 
@@ -30,11 +31,10 @@ const status = async (req, res, next) => {
         clients.forEach(client => {
             clientIds.push(client.id)
         });
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             date: clientIds,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -46,11 +46,10 @@ const sendMessage = async (req, res, next) => {
         clients.forEach(client => {
             client.res.write(message + "\n")
         });
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: message,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }

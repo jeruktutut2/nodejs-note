@@ -1,4 +1,5 @@
 import streamService from "../services/stream-service.js";
+import logMiddleware from "../middleware/log-middleware.js";
 
 const stream = async (req, res, next) => {
     try {
@@ -10,7 +11,10 @@ const stream = async (req, res, next) => {
         await streamService.stream(res)
         res.end("streaming ended")
         req.destroy()
-        return
+        return logMiddleware.logResponse(res, 200, {
+            date: "streaming ended",
+            error: ""
+        })
     } catch (error) {
         next(error)
     }

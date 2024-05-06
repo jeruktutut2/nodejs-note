@@ -7,7 +7,7 @@ const exceptionMiddleware = async (err, req, res, next) => {
         next()
         return
     }
-    console.log("err:", err);
+    console.log(JSON.stringify({logTime: new Date(), error: err}));
     if (err instanceof ResponseException) {
         res.status(err.status).json({
             data: "",

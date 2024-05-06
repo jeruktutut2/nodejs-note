@@ -1,4 +1,5 @@
 import {fileTypeFromBuffer} from 'file-type';
+import logMiddleware from "../middleware/log-middleware.js";
 
 const uploadFile = async (req, res, next) => {
     try {
@@ -12,7 +13,7 @@ const uploadFile = async (req, res, next) => {
         const fileType1 = await fileTypeFromBuffer(buffer1)
         console.log("fileType1:", files[1].name, fileType1);
 
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: "successfully uploaded ",
             error: ""
         })

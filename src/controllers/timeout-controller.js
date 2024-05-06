@@ -1,10 +1,11 @@
 import timeoutService from "../services/timeout-service.js";
+import logMiddleware from "../middleware/log-middleware.js";
 
 const checkTimeout = async (req, res, next) => {
     try {
         const result = await timeoutService.checkTimeout()
         if (!req.isTimeout) {
-            res.status(200).json({
+            return logMiddleware.logResponse(res, 200, {
                 data: result,
                 error: ""
             })

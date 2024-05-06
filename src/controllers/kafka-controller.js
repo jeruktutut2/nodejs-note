@@ -1,4 +1,6 @@
 import kafkaApp from "../application/kafka.js";
+import logMiddleware from "../middleware/log-middleware.js";
+
 const publishEmail = async (req, res, next) => {
     try {
         const message = req.params.message
@@ -10,11 +12,10 @@ const publishEmail = async (req, res, next) => {
                 }
             ]
         })
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: "successfully publish email",
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -31,11 +32,10 @@ const publishTextMessage = async (req, res, next) => {
                 }
             ]
         })
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: "successfully publish text message",
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }

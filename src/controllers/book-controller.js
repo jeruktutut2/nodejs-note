@@ -1,9 +1,10 @@
 import bookService from "../services/book-service.js";
+import logMiddleware from "../middleware/log-middleware.js";
 
 const create = async (req, res, next) => {
     try {
         const result = await bookService.create(req.body)
-        res.status(201).json({
+        return logMiddleware.logResponse(res, 200, {
             data: {
                 name: result.name,
                 price: Number(result.price),
@@ -11,7 +12,6 @@ const create = async (req, res, next) => {
             },
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -21,11 +21,10 @@ const findById = async (req, res, next) => {
     try {
         const id = req.params.id
         const result = await bookService.findById(id)
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: result,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -36,11 +35,10 @@ const findMany = async (req, res, next) => {
         const take = parseInt(req.query.numberOfData)
         const skip = (req.query.page - 1) * take
         const result = await bookService.findMany(skip, take)
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: result,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -51,11 +49,10 @@ const updateName = async (req, res, next) => {
         const id = req.body.id
         const name = req.body.name
         const result = await bookService.updateName(id, name)
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: result,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -64,11 +61,10 @@ const updateName = async (req, res, next) => {
 const update = async (req, res, next) => {
     try {
         const result = await bookService.update(req.body)
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: result,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -78,7 +74,7 @@ const deleteBook = async (req, res, next) => {
     try {
         const id = req.body.id
         const result = await bookService.deleteBook(id)
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: "successfully delete",
             error: ""
         })

@@ -1,13 +1,13 @@
 import redisService from "../services/redis-service.js";
+import logMiddleware from "../middleware/log-middleware.js";
 
 const get = async (req, res, next) => {
     try {
         const result = await redisService.get()
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: result,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
@@ -16,11 +16,10 @@ const get = async (req, res, next) => {
 const set = async (req, res, next) => {
     try {
         const result = await redisService.set()
-        res.status(200).json({
+        return logMiddleware.logResponse(res, 200, {
             data: result,
             error: ""
         })
-        return
     } catch (error) {
         next(error)
     }
