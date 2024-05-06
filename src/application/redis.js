@@ -7,8 +7,8 @@ const newConnection = async () => {
         port: process.env.REDIS_PORT,
         db: process.env.REDIS_DATABASE
     })
-    console.log(new Date(Date.now()).toISOString(), "redis: connected");
-    console.log(new Date(Date.now()).toISOString(), "redis: ", await redis.ping());
+    console.log(new Date(), "redis: connected");
+    console.log(new Date(), "redis: ", await redis.ping());
 
     return redis
 }
