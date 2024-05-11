@@ -53,6 +53,25 @@ npx jest --testNamePattern "should register user" or npx jest -t "should registe
 ## babel
 npm install --save-dev babel-jest @babel/preset-env  
 https://babeljs.io/setup#installation  
+```json
+{
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  }
+}
+```
+Create babel.config.json configuration file
+add:  
+```json
+{
+  "presets": ["@babel/preset-env"]
+}
+```
 
 ## supertest
 npm install --save-dev supertest @types/supertest  
